@@ -342,41 +342,142 @@ function launchConfetti() {
 // FINAL SURPRISE
 // ======================================
 
-function initSurpriseButton() {
 
-    const btn =
-        document.getElementById("surpriseBtn");
+// Tambahan Animasi
 
-    if (!btn) return;
+function startHeartAnimation(){
 
-    btn.addEventListener("click", () => {
+    const canvas =
+    document.getElementById("heartCanvas");
 
-        launchConfetti();
+    const ctx =
+    canvas.getContext("2d");
 
-        setTimeout(() => {
+    canvas.width =
+    window.innerWidth;
 
-            if (typeof confetti !== "undefined") {
+    canvas.height =
+    window.innerHeight;
 
-                confetti({
+    const particles = [];
 
-                    particleCount: 500,
-                    spread: 360
+    const heartPoints = [];
 
-                });
+    const scale = 12;
 
+    // Rumus bentuk hati
+    for(let t=0;t<Math.PI*2;t+=0.03){
+
+        const x =
+        16*Math.pow(Math.sin(t),3);
+
+        const y =
+        -(13*Math.cos(t)
+        -5*Math.cos(2*t)
+        -2*Math.cos(3*t)
+        -Math.cos(4*t));
+
+        heartPoints.push({
+
+            x:
+            canvas.width/2 + x*scale,
+
+            y:
+            canvas.height/2 + y*scale + 250
+
+        });
+
+    }
+
+    for(let i=0;i<heartPoints.length;i++){
+
+        particles.push({
+
+            x:Math.random()*canvas.width,
+
+            y:Math.random()*canvas.height,
+
+            tx:heartPoints[i].x,
+
+            ty:heartPoints[i].y,
+
+            size:2 + Math.random()*4,
+
+            color:`hsl(${Math.random()*360},100%,70%)`
+
+        });
+
+    }
+
+    function animate(){
+
+        ctx.clearRect(
+        0,0,
+        canvas.width,
+        canvas.height
+        );
+
+        let complete = true;
+
+        particles.forEach(p=>{
+
+            p.x += (p.tx-p.x)*0.04;
+            p.y += (p.ty-p.y)*0.04;
+
+            if(
+                Math.abs(p.tx-p.x)>1 ||
+                Math.abs(p.ty-p.y)>1
+            ){
+                complete = false;
             }
 
-        }, 500);
+            ctx.beginPath();
 
-        alert(`❤️ I LOVE YOU AZULIA ❤️
+            ctx.fillStyle =
+            p.color;
 
-Forever & Always
+            ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+            );
 
-Galang ❤️`);
+            ctx.fill();
 
-    });
+        });
+
+        if(!complete){
+
+            requestAnimationFrame(
+            animate
+            );
+
+        }else{
+
+            document.getElementById("finalMessage").style.opacity = 1;
+
+            setTimeout(() => {
+
+            const canvas =
+            document.getElementById("heartCanvas");
+
+            canvas.style.transition = "2s";
+            canvas.style.opacity = "0";
+
+            }, 4000);
+
+        }
+
+    }
+
+    animate();
 
 }
+
+
+
 
 // ======================================
 // GALLERY LIGHTBOX
