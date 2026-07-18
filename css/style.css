@@ -695,6 +695,23 @@ overflow-x:hidden;
 
 }
 
+.letter-card p{
+    margin-bottom: 22px;
+    line-height: 2;
+    text-align: justify;
+}
+
+.letter-card p:first-of-type{
+    text-align: center;
+    font-size: 24px;
+    color: #ff6f91;
+}
+
+.letter-card p:last-child{
+    text-align: right;
+    font-weight: 600;
+}
+
 .gallery{
 
     display:flex;
