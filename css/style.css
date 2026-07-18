@@ -763,11 +763,9 @@ overflow-x:hidden;
 }
 
 .final{
-
+    margin-top:360px;
     text-align:center;
-
-    padding:120px 20px;
-
+    padding-bottom:160px;
 }
 
 .final button{
@@ -791,6 +789,36 @@ overflow-x:hidden;
 
     color:white;
 
+}
+
+#heartCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:9999;
+}
+
+.final-message{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+
+    text-align:center;
+
+    color:white;
+
+    font-size:3rem;
+
+    font-weight:bold;
+
+    opacity:0;
+
+    transition:2s;
+
+    z-index:10000;
 }
 
 /* ======================
